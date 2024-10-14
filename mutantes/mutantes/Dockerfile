@@ -1,0 +1,14 @@
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY build.gradle ./
+COPY src ./src
+
+RUN ./gradlew build --no-daemon
+
+COPY build/libs/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
